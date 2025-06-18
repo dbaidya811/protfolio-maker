@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Generator - Create Your Professional Portfolio</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/15181/15181334.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            color: #b0b0b0;
+        }
+
+        .buy-coffee-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .buy-coffee-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+        
+        .buy-coffee-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .buy-coffee-btn:hover::before {
+            left: 100%;
+        }
+        
+        .buy-coffee-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(135deg, #FF5252, #FF7043);
+        }
+        
+        .buy-coffee-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .coffee-icon {
+            font-size: 1.3rem;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            margin-bottom: 50px;
+            animation: slideInLeft 1s ease-out 0.5s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #f093fb);
+            animation: expandWidth 2s ease-out;
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 50px; }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #888;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .dynamic-list {
+            border: 2px dashed rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        .list-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .list-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .list-item:hover::before {
+            left: 100%;
+        }
+
+        .list-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .list-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .list-item-header strong {
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+            text-align: center;
+            display: none;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: #28a745;
+            margin-bottom: 25px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-container p {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .share-link {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            font-family: monospace;
+            font-size: 16px;
+            word-break: break-all;
+            color: #e0e0e0;
+            backdrop-filter: blur(10px);
+        }
+
+        .copy-btn, .preview-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .preview-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .copy-btn:hover, .preview-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .preview-btn:hover {
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6a4c93);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn {
+                padding: 15px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-tie"></i> Portfolio Generator</h1>
+            <p>Create your professional portfolio in minutes and get a shareable link</p>
+            <div class="buy-coffee-container">
+                <a href="https://coff.ee/dbaidya811e" target="_blank" class="buy-coffee-btn">
+                    <i class="fas fa-coffee coffee-icon"></i>
+                    Buy Me a Coffee
+                </a>
+            </div>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <form id="portfolioForm">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user"></i> Basic Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Professional Title *</label>
+                            <input type="text" id="title" name="title" placeholder="e.g., Full Stack Developer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="e.g., Dhaka, Bangladesh">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileImage">Profile Image URL</label>
+                            <input type="url" id="profileImage" name="profileImage" placeholder="https://example.com/image.jpg">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Me -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> About Me</h2>
+                    <div class="form-group">
+                        <label for="about">About Me</label>
+                        <textarea id="about" name="about" placeholder="Tell us about yourself, your passion, and what drives you..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-tools"></i> Skills</h2>
+                    <div class="dynamic-list" id="skillsList">
+                        <div class="list-item">
+                            <div class="list-item-header">
+                                <strong>Skill 1</strong>
+                                <button type="button" class="remove-btn" onclick="removeSkill(this)">Remove</button>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Skill Name</label>
+                                    <input type="text" name="skillName[]" placeholder="e.g., JavaScript" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Level</label>
+                                    <select name="skillLevel[]" required>
+                                        <option value="">Select Level</option>
+                                        <option value="Beginner">Beginner</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Advanced">Advanced</option>
+                                        <option value="Expert">Expert</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addSkill()">
+                        <i class="fas fa-plus"></i> Add Skill
+                    </button>
+                </div>
+
+                <!-- Projects -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-project-diagram"></i> Projects (Optional)</h2>
+                    <div class="dynamic-list" id="projectsList">
+                        <div class="list-item">
+                            <div class="list-item-header">
+                                <strong>Project 1</strong>
+                                <button type="button" class="remove-btn" onclick="removeProject(this)">Remove</button>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Project Title</label>
+                                    <input type="text" name="projectTitle[]" placeholder="e.g., E-commerce Website">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea name="projectDescription[]" placeholder="Describe your project..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Technologies (comma separated)</label>
+                                    <input type="text" name="projectTechnologies[]" placeholder="e.g., React, Node.js, MongoDB">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addProject()">
+                        <i class="fas fa-plus"></i> Add Project
+                    </button>
+                </div>
+
+                <!-- Experience -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-briefcase"></i> Work Experience (Optional)</h2>
+                    <div class="dynamic-list" id="experienceList">
+                        <div class="list-item">
+                            <div class="list-item-header">
+                                <strong>Experience 1</strong>
+                                <button type="button" class="remove-btn" onclick="removeExperience(this)">Remove</button>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Job Title</label>
+                                    <input type="text" name="expTitle[]" placeholder="e.g., Senior Developer">
+                                </div>
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" name="expCompany[]" placeholder="e.g., Tech Company Ltd.">
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="month" name="expStartDate[]">
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="month" name="expEndDate[]">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea name="expDescription[]" placeholder="Describe your role and achievements..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addExperience()">
+                        <i class="fas fa-plus"></i> Add Experience
+                    </button>
+                </div>
+
+                <!-- Education -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+                    <div class="dynamic-list" id="educationList">
+                        <div class="list-item">
+                            <div class="list-item-header">
+                                <strong>Education 1</strong>
+                                <button type="button" class="remove-btn" onclick="removeEducation(this)">Remove</button>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Degree</label>
+                                    <input type="text" name="eduDegree[]" placeholder="e.g., Bachelor of Computer Science" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Institution</label>
+                                    <input type="text" name="eduInstitution[]" placeholder="e.g., University of Dhaka" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="month" name="eduStartDate[]" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="month" name="eduEndDate[]">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description (Optional)</label>
+                                    <textarea name="eduDescription[]" placeholder="Additional details about your education..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addEducation()">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
+                </div>
+
+                <!-- Social Links -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-share-alt"></i> Social Links</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="github">GitHub</label>
+                            <input type="url" id="github" name="github" placeholder="https://github.com/yourusername">
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn</label>
+                            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourusername">
+                        </div>
+                        <div class="form-group">
+                            <label for="twitter">Twitter</label>
+                            <input type="url" id="twitter" name="twitter" placeholder="https://twitter.com/yourusername">
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Personal Website</label>
+                            <input type="url" id="website" name="website" placeholder="https://yourwebsite.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Creating your portfolio...</p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-magic"></i> Generate Portfolio
+                </button>
+            </form>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="result-title">Portfolio Created Successfully!</h2>
+            <p>Your portfolio has been generated and is ready to share.</p>
+            <div class="share-link" id="shareLink"></div>
+            <button class="copy-btn" onclick="copyLink()">
+                <i class="fas fa-copy"></i> Copy Link
+            </button>
+            <a class="preview-btn" id="previewLink" target="_blank">
+                <i class="fas fa-eye"></i> Preview Portfolio
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Dynamic form functionality
+        function addSkill() {
+            const skillsList = document.getElementById('skillsList');
+            const skillCount = skillsList.children.length + 1;
+            
+            const skillItem = document.createElement('div');
+            skillItem.className = 'list-item';
+            skillItem.innerHTML = `
+                <div class="list-item-header">
+                    <strong>Skill ${skillCount}</strong>
+                    <button type="button" class="remove-btn" onclick="removeSkill(this)">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Skill Name</label>
+                        <input type="text" name="skillName[]" placeholder="e.g., JavaScript" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Level</label>
+                        <select name="skillLevel[]" required>
+                            <option value="">Select Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            
+            skillsList.appendChild(skillItem);
+        }
+
+        function removeSkill(button) {
+            if (document.querySelectorAll('#skillsList .list-item').length > 1) {
+                button.closest('.list-item').remove();
+            }
+        }
+
+        function addProject() {
+            const projectsList = document.getElementById('projectsList');
+            const projectCount = projectsList.children.length + 1;
+            
+            const projectItem = document.createElement('div');
+            projectItem.className = 'list-item';
+            projectItem.innerHTML = `
+                <div class="list-item-header">
+                    <strong>Project ${projectCount}</strong>
+                    <button type="button" class="remove-btn" onclick="removeProject(this)">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Project Title</label>
+                        <input type="text" name="projectTitle[]" placeholder="e.g., E-commerce Website">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="projectDescription[]" placeholder="Describe your project..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Technologies (comma separated)</label>
+                        <input type="text" name="projectTechnologies[]" placeholder="e.g., React, Node.js, MongoDB">
+                    </div>
+                </div>
+            `;
+            
+            projectsList.appendChild(projectItem);
+        }
+
+        function removeProject(button) {
+            if (document.querySelectorAll('#projectsList .list-item').length > 1) {
+                button.closest('.list-item').remove();
+            }
+        }
+
+        function addExperience() {
+            const experienceList = document.getElementById('experienceList');
+            const expCount = experienceList.children.length + 1;
+            
+            const expItem = document.createElement('div');
+            expItem.className = 'list-item';
+            expItem.innerHTML = `
+                <div class="list-item-header">
+                    <strong>Experience ${expCount}</strong>
+                    <button type="button" class="remove-btn" onclick="removeExperience(this)">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" name="expTitle[]" placeholder="e.g., Senior Developer">
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" name="expCompany[]" placeholder="e.g., Tech Company Ltd.">
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="month" name="expStartDate[]">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="month" name="expEndDate[]">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="expDescription[]" placeholder="Describe your role and achievements..."></textarea>
+                    </div>
+                </div>
+            `;
+            
+            experienceList.appendChild(expItem);
+        }
+
+        function removeExperience(button) {
+            if (document.querySelectorAll('#experienceList .list-item').length > 1) {
+                button.closest('.list-item').remove();
+            }
+        }
+
+        function addEducation() {
+            const educationList = document.getElementById('educationList');
+            const eduCount = educationList.children.length + 1;
+            
+            const eduItem = document.createElement('div');
+            eduItem.className = 'list-item';
+            eduItem.innerHTML = `
+                <div class="list-item-header">
+                    <strong>Education ${eduCount}</strong>
+                    <button type="button" class="remove-btn" onclick="removeEducation(this)">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" name="eduDegree[]" placeholder="e.g., Bachelor of Computer Science" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Institution</label>
+                        <input type="text" name="eduInstitution[]" placeholder="e.g., University of Dhaka" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="month" name="eduStartDate[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="month" name="eduEndDate[]">
+                    </div>
+                    <div class="form-group">
+                        <label>Description (Optional)</label>
+                        <textarea name="eduDescription[]" placeholder="Additional details about your education..."></textarea>
+                    </div>
+                </div>
+            `;
+            
+            educationList.appendChild(eduItem);
+        }
+
+        function removeEducation(button) {
+            if (document.querySelectorAll('#educationList .list-item').length > 1) {
+                button.closest('.list-item').remove();
+            }
+        }
+
+        // Form submission
+        document.getElementById('portfolioForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            
+            try {
+                const formData = new FormData(this);
+                const portfolioData = {
+                    name: formData.get('name'),
+                    title: formData.get('title'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    location: formData.get('location'),
+                    profileImage: formData.get('profileImage'),
+                    about: formData.get('about'),
+                    github: formData.get('github'),
+                    linkedin: formData.get('linkedin'),
+                    twitter: formData.get('twitter'),
+                    website: formData.get('website'),
+                    skills: [],
+                    projects: [],
+                    experience: [],
+                    education: []
+                };
+
+                // Process skills
+                const skillNames = formData.getAll('skillName[]');
+                const skillLevels = formData.getAll('skillLevel[]');
+                for (let i = 0; i < skillNames.length; i++) {
+                    if (skillNames[i] && skillLevels[i]) {
+                        portfolioData.skills.push({
+                            name: skillNames[i],
+                            level: skillLevels[i]
+                        });
+                    }
+                }
+
+                // Process projects
+                const projectTitles = formData.getAll('projectTitle[]');
+                const projectDescriptions = formData.getAll('projectDescription[]');
+                const projectTechnologies = formData.getAll('projectTechnologies[]');
+                for (let i = 0; i < projectTitles.length; i++) {
+                    if (projectTitles[i] && projectDescriptions[i]) {
+                        portfolioData.projects.push({
+                            title: projectTitles[i],
+                            description: projectDescriptions[i],
+                            technologies: projectTechnologies[i] ? projectTechnologies[i].split(',').map(tech => tech.trim()) : []
+                        });
+                    }
+                }
+
+                // Process experience
+                const expTitles = formData.getAll('expTitle[]');
+                const expCompanies = formData.getAll('expCompany[]');
+                const expStartDates = formData.getAll('expStartDate[]');
+                const expEndDates = formData.getAll('expEndDate[]');
+                const expDescriptions = formData.getAll('expDescription[]');
+                for (let i = 0; i < expTitles.length; i++) {
+                    if (expTitles[i] && expCompanies[i] && expStartDates[i] && expDescriptions[i]) {
+                        portfolioData.experience.push({
+                            title: expTitles[i],
+                            company: expCompanies[i],
+                            startDate: expStartDates[i],
+                            endDate: expEndDates[i] || null,
+                            description: expDescriptions[i]
+                        });
+                    }
+                }
+
+                // Process education
+                const eduDegrees = formData.getAll('eduDegree[]');
+                const eduInstitutions = formData.getAll('eduInstitution[]');
+                const eduStartDates = formData.getAll('eduStartDate[]');
+                const eduEndDates = formData.getAll('eduEndDate[]');
+                const eduDescriptions = formData.getAll('eduDescription[]');
+                for (let i = 0; i < eduDegrees.length; i++) {
+                    if (eduDegrees[i] && eduInstitutions[i] && eduStartDates[i]) {
+                        portfolioData.education.push({
+                            degree: eduDegrees[i],
+                            institution: eduInstitutions[i],
+                            startDate: eduStartDates[i],
+                            endDate: eduEndDates[i] || null,
+                            description: eduDescriptions[i] || ''
+                        });
+                    }
+                }
+
+                const response = await fetch('/api/portfolio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(portfolioData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('resultContainer').style.display = 'block';
+                    document.getElementById('shareLink').textContent = result.shareUrl;
+                    document.getElementById('previewLink').href = result.shareUrl;
+                } else {
+                    alert('Error creating portfolio: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while creating your portfolio. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            }
+        });
+
+        // Copy link functionality
+        function copyLink() {
+            const shareLink = document.getElementById('shareLink').textContent;
+            navigator.clipboard.writeText(shareLink).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = shareLink;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Link copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html> 
