@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const { nanoid } = require('nanoid');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,8 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// In-memory storage for portfolios (in production, use a database)
-const portfolios = new Map();
+// In-memory storage for portfolios
+const userPortfolios = {};
 
 // Routes
 app.get('/', (req, res) => {
@@ -32,12 +33,12 @@ app.post('/api/portfolio', (req, res) => {
         const portfolioHTML = generatePortfolioHTML(portfolioData);
         
         // Store portfolio data
-        portfolios.set(portfolioId, {
+        userPortfolios[portfolioId] = {
             id: portfolioId,
             data: portfolioData,
             html: portfolioHTML,
             createdAt: new Date().toISOString()
-        });
+        };
         
         res.json({
             success: true,
@@ -53,7 +54,7 @@ app.post('/api/portfolio', (req, res) => {
 // Get portfolio by ID
 app.get('/portfolio/:id', (req, res) => {
     const portfolioId = req.params.id;
-    const portfolio = portfolios.get(portfolioId);
+    const portfolio = userPortfolios[portfolioId];
     
     if (!portfolio) {
         return res.status(404).send('Portfolio not found');
@@ -65,7 +66,7 @@ app.get('/portfolio/:id', (req, res) => {
 // Get portfolio data by ID (for editing)
 app.get('/api/portfolio/:id', (req, res) => {
     const portfolioId = req.params.id;
-    const portfolio = portfolios.get(portfolioId);
+    const portfolio = userPortfolios[portfolioId];
     
     if (!portfolio) {
         return res.status(404).json({ success: false, error: 'Portfolio not found' });
@@ -78,7 +79,7 @@ app.get('/api/portfolio/:id', (req, res) => {
 app.put('/api/portfolio/:id', (req, res) => {
     try {
         const portfolioId = req.params.id;
-        const portfolio = portfolios.get(portfolioId);
+        const portfolio = userPortfolios[portfolioId];
         
         if (!portfolio) {
             return res.status(404).json({ success: false, error: 'Portfolio not found' });
@@ -87,12 +88,12 @@ app.put('/api/portfolio/:id', (req, res) => {
         const updatedData = req.body;
         const updatedHTML = generatePortfolioHTML(updatedData);
         
-        portfolios.set(portfolioId, {
+        userPortfolios[portfolioId] = {
             ...portfolio,
             data: updatedData,
             html: updatedHTML,
             updatedAt: new Date().toISOString()
-        });
+        };
         
         res.json({ success: true, message: 'Portfolio updated successfully' });
     } catch (error) {
@@ -101,17 +102,29 @@ app.put('/api/portfolio/:id', (req, res) => {
     }
 });
 
-// Add this route to generate and send HTML directly
+// Handle form submission and redirect to /user/:id
 app.post('/generate', (req, res) => {
     try {
         const portfolioData = req.body;
-        const portfolioHTML = generatePortfolioHTML(portfolioData);
-        res.set('Content-Type', 'text/html');
-        res.send(portfolioHTML);
+        const id = nanoid(8);
+        userPortfolios[id] = portfolioData;
+        res.json({ success: true, id });
     } catch (error) {
         console.error('Error generating portfolio:', error);
-        res.status(500).send('<h1>Failed to generate portfolio</h1>');
+        res.status(500).json({ success: false, error: 'Failed to generate portfolio' });
     }
+});
+
+// Route to display portfolio by ID
+app.get('/user/:id', (req, res) => {
+    const id = req.params.id;
+    const data = userPortfolios[id];
+    if (!data) {
+        return res.status(404).send('<h1>Portfolio not found</h1>');
+    }
+    const html = generatePortfolioHTML(data);
+    res.set('Content-Type', 'text/html');
+    res.send(html);
 });
 
 // Generate portfolio HTML

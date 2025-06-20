@@ -1020,7 +1020,7 @@
                     }
                 }
 
-                // Send to /generate and replace page with HTML
+                // Send to /generate and redirect to /user/:id
                 const response = await fetch('/generate', {
                     method: 'POST',
                     headers: {
@@ -1030,10 +1030,12 @@
                 });
 
                 if (response.ok) {
-                    const html = await response.text();
-                    document.open();
-                    document.write(html);
-                    document.close();
+                    const result = await response.json();
+                    if (result.success && result.id) {
+                        window.location.href = `/user/${result.id}`;
+                    } else {
+                        alert('Error generating portfolio.');
+                    }
                 } else {
                     alert('Error generating portfolio.');
                 }
