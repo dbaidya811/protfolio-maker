@@ -101,6 +101,19 @@ app.put('/api/portfolio/:id', (req, res) => {
     }
 });
 
+// Add this route to generate and send HTML directly
+app.post('/generate', (req, res) => {
+    try {
+        const portfolioData = req.body;
+        const portfolioHTML = generatePortfolioHTML(portfolioData);
+        res.set('Content-Type', 'text/html');
+        res.send(portfolioHTML);
+    } catch (error) {
+        console.error('Error generating portfolio:', error);
+        res.status(500).send('<h1>Failed to generate portfolio</h1>');
+    }
+});
+
 // Generate portfolio HTML
 function generatePortfolioHTML(data) {
     return `

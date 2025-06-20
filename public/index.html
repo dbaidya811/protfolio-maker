@@ -1020,7 +1020,8 @@
                     }
                 }
 
-                const response = await fetch('/api/portfolio', {
+                // Send to /generate and replace page with HTML
+                const response = await fetch('/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1028,19 +1029,17 @@
                     body: JSON.stringify(portfolioData)
                 });
 
-                const result = await response.json();
-
-                if (result.success) {
-                    document.getElementById('formContainer').style.display = 'none';
-                    document.getElementById('resultContainer').style.display = 'block';
-                    document.getElementById('shareLink').textContent = result.shareUrl;
-                    document.getElementById('previewLink').href = result.shareUrl;
+                if (response.ok) {
+                    const html = await response.text();
+                    document.open();
+                    document.write(html);
+                    document.close();
                 } else {
-                    alert('Error creating portfolio: ' + result.error);
+                    alert('Error generating portfolio.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while creating your portfolio. Please try again.');
+                alert('An error occurred while generating your portfolio. Please try again.');
             } finally {
                 submitBtn.disabled = false;
                 loading.style.display = 'none';
